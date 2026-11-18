@@ -5,7 +5,7 @@ import { ArrowLeft, ArrowRight, Check, Database, FileUp, ListTree, Plus, Search,
 import { useToast } from '@/components/ui/toast'
 
 function Button({ children, onClick, variant = 'primary', type = 'button', disabled = false }: {
-  children: React.ReactNode; onClick?: () => void; variant?: 'primary' | 'secondary' | 'danger'; type?: 'button' | 'submit'; disabled?: boolean
+  children: React.ReactNode; onClick?: React.MouseEventHandler<HTMLButtonElement>; variant?: 'primary' | 'secondary' | 'danger'; type?: 'button' | 'submit'; disabled?: boolean
 }) {
   return <button type={type} onClick={onClick} disabled={disabled} className={`button button-${variant}`}>{children}</button>
 }
@@ -530,7 +530,7 @@ export function EtlWorkspace({ onChanged, onOpenDashboard }: {
                 : <><b>{num(analysis.newRows)}</b> baris baru akan ditambahkan ke <b>{num(dbRows)}</b> baris yang sudah ada.{analysis.alreadyInDatabase + analysis.duplicateInFile > 0 && <> Booking ID yang sudah ada dilewati.</>}</>}
             </p>
             <div className="etl-actions">
-              <Button onClick={runImport} disabled={busy}>
+              <Button onClick={() => runImport()} disabled={busy}>
                 {method === 'replace' ? <Upload size={16} /> : <Plus size={16} />}
                 {busy ? 'Memproses...' : method === 'replace' ? 'Timpa Dataset' : 'Tambahkan Data'}
               </Button>
